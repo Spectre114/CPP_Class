@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Data Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            width: calc(100% - 24px);
+        }
+        button {
+            background-color: #5c67f2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4a54e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Graph Data</h2>
+        <form id="graphForm">
+            <input type="number" id="vertices" placeholder="Number of vertices" required>
+            <div id="matrixInput"></div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('vertices').addEventListener('change', function() {
+            const vertices = parseInt(this.value);
+            const matrixInput = document.getElementById('matrixInput');
+            matrixInput.innerHTML = '';
+            if (vertices > 0) {
+                for (let i = 0; i < vertices; i++) {
+                    for (let j = 0; j < vertices; j++) {
+                        matrixInput.innerHTML += `<input type="number" placeholder="Edge ${i+1}-${j+1}" required>`;
+                    }
+                    matrixInput.innerHTML += '<br>';
+                }
+            }
+        });
+
+        document.getElementById('graphForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll('#matrixInput input');
+            const vertices = parseInt(document.getElementById('vertices').value);
+            let matrix = [];
+            let index = 0;
+            for (let i = 0; i < vertices; i++) {
+                matrix[i] = [];
+                for (let j = 0; j < vertices; j++) {
+                    matrix[i][j] = parseInt(inputs[index++].value);
+                }
+            }
+            console.log(matrix); // For now, just log the matrix to the console
+        });
+    </script>
+</body>
+</html>
