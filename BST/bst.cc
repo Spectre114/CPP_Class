@@ -1,15 +1,14 @@
-#include <iostream>
-#include <stdlib.h>
+#include <bits/stdc++.h>
 using namespace std;
 struct Node
 {
     Node *left;
-    char val;
+    int val;
     Node *right;
 };
 Node *createRoot(Node *root)
 {
-    char value;
+    int value;
     cout << "Enter the value to insert: ";
     cin >> value;
     Node *p = (Node *)malloc(sizeof(Node *));
@@ -19,7 +18,7 @@ Node *createRoot(Node *root)
     root = p;
     return root;
 }
-void insertBST(Node *root, char value)
+void insertBST(Node *root, int value)
 {
 
     if (value < root->val)
@@ -58,17 +57,86 @@ void postOrder(Node *root)
         cout << root->val << " ";
     }
 }
+void levelOrder(Node *root)
+{
+    queue<Node *> q;
+    q.push(root);
+    vector<vector<int>> level;
+    while (!q.empty())
+    {
+        vector<int> l;
+        int SIZE = q.size();
+        for (int i = 0; i < SIZE; i++)
+        {
+            Node *node = q.front();
+            q.pop();
+            l.push_back(node->val);
+            if (node->left != NULL)
+                q.push(node->left);
+            if (node->right != NULL)
+                q.push(node->right);
+        }
+        level.push_back(l);
+    }
+    for (int i = 0; i < level.size(); i++)
+    {
+        for (int j = 0; j < level[i].size(); j++)
+        {
+            cout << level[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+Node *inorderPre(Node *root)
+{
+    while (root->right != NULL)
+    {
+        root = root->right;
+    }
+    return root;
+}
+Node *Delete(Node *root, int value)
+{
+    Node *inPre;
+    if (root == NULL)
+        return NULL;
+    if (root->left == NULL && root->right == NULL)
+    {
+        delete root;
+        return NULL;
+    }
+    if (value < root->val)
+    {
+        root->left = Delete(root->left, value);
+    }
+    else if (value > root->val)
+    {
+        root->right = Delete(root->right, value);
+    }
+    else
+    {
+        inPre = inorderPre(root->left);
+        root->val = inPre->val;
+        root->left = Delete(root->left, inPre->val);
+    }
+    return root;
+}
 int main()
 {
     Node *root = NULL;
     int i = 0;
     root = createRoot(root);
-    while (i++ < 4)
+    while (i++ < 6)
     {
-        char value;
+        int value;
         cout << "Enter the value to insert: ";
         cin >> value;
         insertBST(root, value);
     }
-    postOrder(root);
+    levelOrder(root);
+    int value;
+    cout << "Enter the value to delete: ";
+    cin >> value;
+    root = Delete(root, value);
+    levelOrder(root);
 }
