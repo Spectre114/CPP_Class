@@ -14,15 +14,33 @@ public:
         cout << "In centimetres:";
         cin >> cm;
     }
-    void AddDist(AddDistance d1, AddDistance d2)
+    AddDistance operator+(AddDistance d2)
     {
-        metre = d1.metre + d2.metre;
-        cm = d1.cm + d2.cm;
-        if (cm >= 100)
+        AddDistance temp;
+        temp.metre = metre + d2.metre;
+        temp.cm = cm + d2.cm;
+        if (temp.cm >= 100)
         {
-            metre += cm / 100;
-            cm -= 100;
+            temp.metre += cm / 100;
+            temp.cm -= 100;
         }
+        return temp;
+    }
+    void operator-()
+    {
+        metre = -metre;
+        cm = -cm;
+    }
+    void operator++(int)
+    {
+
+        metre++;
+        cm++;
+    }
+    void operator++()
+    {
+        ++metre;
+        ++cm;
     }
     void display()
     {
@@ -36,9 +54,15 @@ int main()
     d1.setDist();
     cout << "Enter distance 2: ";
     d2.setDist();
-    d3.AddDist(d1, d2);
-    // d3 = d1 + d2; // Operator overloading
+    // d3.AddDist(d1, d2);
+    -d2;
+    d3 = d1 + d2;
+    d1++;
+    ++d1;
+    // d1++;
     // d1.AddDist(d2);
     // d2.AddDist(d1);
+    d1.display();
+    d2.display();
     d3.display();
 }
