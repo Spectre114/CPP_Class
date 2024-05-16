@@ -18,4 +18,5 @@ int main(int size, char *arguements[]) // If you want to take input from command
     {
         cout << arguements[i] << " ";
     }
+    cout << custom1::a;
 }
