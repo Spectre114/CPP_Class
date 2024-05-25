@@ -5,10 +5,7 @@ class Vehicle
 protected:
     int mileage;
     int price;
-    void display()
-    {
-        cout << "Vehicle" << endl;
-    }
+    virtual void display() = 0;
 };
 class Car : public Vehicle
 {
@@ -19,10 +16,7 @@ protected:
     string fuelType;
 
 public:
-    void display()
-    {
-        cout << "Car" << endl;
-    }
+    virtual void display() = 0;
 };
 class Bike : public Vehicle
 {
@@ -32,10 +26,7 @@ protected:
     string coolingType;
     string wheelType;
     int fuelTanksize;
-    void display()
-    {
-        cout << "Bike" << endl;
-    }
+    virtual void display() = 0;
 };
 class Audi : public Car
 {
