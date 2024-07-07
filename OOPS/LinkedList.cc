@@ -11,45 +11,59 @@ public:
         val = -1;
         next = nullptr;
     }
+    LinkedList(int val)
+    {
+        this->val = val;
+        next = nullptr;
+    }
     void insert()
     {
-        LinkedList *p = new LinkedList();
-        LinkedList *temp = this->next;
+        int val;
         cout << "Enter the value to insert: ";
-        cin >> p->val;
-        if (temp == nullptr) // When linked list does not exist
+        cin >> val;
+        if (this->next == nullptr)
         {
-            this->next = p;
+            this->next = new LinkedList(val);
         }
         else
         {
-            static int count = 0;
+            LinkedList *temp = this->next;
             while (temp->next != nullptr)
-            {
                 temp = temp->next;
-            }
-            temp->next = p;
+            temp->next = new LinkedList(val);
+        }
+    }
+    void insert(int val)
+    {
+        // int val;
+        // cout << "Enter the value to insert: ";
+        // cin >> val;
+        if (this->next == nullptr)
+        {
+            this->next = new LinkedList(val);
+        }
+        else
+        {
+            LinkedList *temp = this->next;
+            while (temp->next != nullptr)
+                temp = temp->next;
+            temp->next = new LinkedList(val);
         }
     }
     void Delete()
     {
-        LinkedList *head = this->next;
-        if (head == NULL)
+        LinkedList *toDelete = this->next;
+        if (toDelete == nullptr)
         {
             cout << "Underflow" << endl;
             return;
         }
-        this->next = head->next;
-        delete head;
+        this->next = toDelete->next;
+        delete toDelete;
     }
     void display()
     {
         LinkedList *temp = this->next;
-        if (temp == NULL)
-        {
-            cout << "Underflow" << endl;
-            return;
-        }
         while (temp)
         {
             cout << temp->val << " ";
@@ -60,26 +74,14 @@ public:
 };
 int main()
 {
-    LinkedList *ll = new LinkedList();
-    int ch;
-    do
-    {
-        cout << "Enter your Choice:\n1: Insert\n2: Display\n3: Delete\n4: Exit\n>> ";
-        cin >> ch;
-        switch (ch)
-        {
-        case 1:
-            ll->insert();
-            break;
-        case 2:
-            ll->display();
-            break;
-        case 3:
-            ll->Delete();
-            break;
-
-        default:
-            break;
-        }
-    } while (ch != 4);
+    LinkedList *dummy = new LinkedList();
+    dummy->insert(10);
+    dummy->insert();
+    dummy->insert(11);
+    dummy->insert(13);
+    dummy->insert(14);
+    dummy->insert(15);
+    dummy->display();
+    dummy->Delete();
+    dummy->display();
 }
