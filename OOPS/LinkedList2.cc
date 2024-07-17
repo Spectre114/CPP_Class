@@ -154,6 +154,22 @@ public:
         carry = plusOne->val / 10;
         plusOne->val %= 10;
     }
+    void doubleLL(LinkedList *plusOne)
+    {
+        if (plusOne->next == nullptr)
+        {
+            plusOne->val *= 2;
+            carry = plusOne->val / 10;
+            plusOne->val %= 10;
+            return;
+        }
+        doubleLL(plusOne->next);
+        plusOne->val *= 2;
+        plusOne->val += carry;
+        carry = plusOne->val / 10;
+        plusOne->val %= 10;
+    }
+
     void display()
     {
         LinkedList *temp = this->next;
@@ -192,7 +208,7 @@ int main()
     plusOne->insert(9);
     plusOne->insert(9);
     plusOne->display(1);
-    plusOne->addOne(plusOne);
+    plusOne->doubleLL(plusOne);
     if (plusOne->carry)
     {
         LinkedList *newNode = new LinkedList(plusOne->carry);
